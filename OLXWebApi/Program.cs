@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using OLXWebApi.Data.DbContexts;
 using OLXWebApi.Data.IRepositories;
 using OLXWebApi.Data.Repositories;
+using OLXWebApi.Extensions;
 using OLXWebApi.Services.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,8 @@ builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddCustomService();
+builder.Services.ConfigureSwagger();
 
 var app = builder.Build();
 
