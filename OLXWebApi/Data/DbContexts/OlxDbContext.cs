@@ -5,7 +5,10 @@ namespace OLXWebApi.Data.DbContexts
 {
     public class OlxDbContext: DbContext
     {
-        public OlxDbContext(DbContextOptions<OlxDbContext> options) : base(options) { }
+        public OlxDbContext(DbContextOptions<OlxDbContext> options) :
+            base(options) 
+        {
+        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
