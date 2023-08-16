@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using OLXWebApi.Data.IRepositories;
 using OLXWebApi.Domain.Entities;
 using OLXWebApi.Services.Dtos;
@@ -9,6 +10,14 @@ namespace OLXWebApi.Services.Service
     public class UserService : IUserService
     {
         private readonly IRepository<User> _repository;
+        private readonly IMapper _mapper;
+
+        public UserService(IRepository<User> repository, IMapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+        }
+
         public ValueTask<User> CreateAsync(UserForCreationDto dto)
         {
             throw new NotImplementedException();
