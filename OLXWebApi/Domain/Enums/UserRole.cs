@@ -1,6 +1,9 @@
 ﻿namespace OLXWebApi.Domain.Enums
 {
-    public class UserRole
+    public enum UserRole
     {
+        User,
+        Admin
+
     }
 }
