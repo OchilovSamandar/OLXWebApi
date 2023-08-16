@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OLXWebApi.Services.Dtos;
 using OLXWebApi.Services.IService;
 
 namespace OLXWebApi.Controllers
@@ -14,5 +15,8 @@ namespace OLXWebApi.Controllers
         {
             this.authService = authService;
         }
+        [HttpPost("login")]
+        public async ValueTask<IActionResult> LoginAsync([FromBody] LoginDto dto) =>
+            Ok(await authService.AuthenticateAsync(dto));
     }
 }
