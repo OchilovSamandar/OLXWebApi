@@ -1,5 +1,6 @@
 ﻿using OLXWebApi.Domain.Entities.Commans;
 using OLXWebApi.Domain.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OLXWebApi.Domain.Entities
 {
@@ -11,6 +12,7 @@ namespace OLXWebApi.Domain.Entities
         public string Password { get; set; }
         public UserRole UserRole { get; set; }
         public byte Awatar { get; set; }
+        
         public List<MyAds> MyAdsList { get; set; } = new List<MyAds>();
         public List<Announcement> MyAnnouncementList { get; set; } = new List<Announcement>();
         public bool IsActive { get; set; } = true;
