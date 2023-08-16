@@ -7,6 +7,10 @@ namespace OLXWebApi.Services.Mappers
 {
     public class MapperProfile : Profile 
     {
-        //CreateMap<User, UserForCreationDto>().ReverseMap();
+        public MapperProfile()
+        {
+            CreateMap<User, UserForCreationDto>().ReverseMap();
+
+        }
     }
 }
