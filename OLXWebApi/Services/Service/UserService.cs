@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using OLXWebApi.Data.IRepositories;
 using OLXWebApi.Domain.Entities;
 using OLXWebApi.Services.Dtos;
+using OLXWebApi.Services.Exceptions;
 using OLXWebApi.Services.IService;
 
 namespace OLXWebApi.Services.Service
@@ -28,9 +29,15 @@ namespace OLXWebApi.Services.Service
             throw new NotImplementedException();
         }
 
-        public ValueTask<bool> RemoveAsync(long id)
+        public async ValueTask<bool> RemoveAsync(long id)
         {
-            throw new NotImplementedException();
+            var exsistUser = await this._repository.SelectByIdAsync(id);
+            if (exsistUser == null)
+            {
+                throw new OlxException(404, "User not found");
+            }
+
+            return await this._repository.DeleteAsync(id);
         }
 
         public ValueTask<IEnumerable<User>> RetriveAllAsync()
