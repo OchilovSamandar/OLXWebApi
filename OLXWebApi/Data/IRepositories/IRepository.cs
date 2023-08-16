@@ -5,7 +5,7 @@
         ValueTask<TEntity> InsertAsync(TEntity entity);
         ValueTask<TEntity> UpdateAsync(TEntity entity);
         ValueTask<bool> DeleteAsync(long id);
-        IQueryable<TEntity> SelectAllAsync();
+        IQueryable<TEntity> SelectAll();
         ValueTask<TEntity> SelectByIdAsync(long id);
         ValueTask<bool> SaveChangesAsync(); 
     }
