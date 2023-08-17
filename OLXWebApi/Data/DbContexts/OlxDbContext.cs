@@ -25,7 +25,7 @@ namespace OLXWebApi.Data.DbContexts
                new User() { Id = 3, Firstname = "Samandar", Lastname = "Ochilov", Email = "ochilovsamandar71@gmail.com", RoleId = 1,Awatar = null, Password = PasswordHelper.Hash("12345678"), MyAdsList = null, MyAnnouncementList = null, IsActive = true, CreatedAt = DateTime.UtcNow, UpdatedAt = null }
                );
 
-            modelBuilder.Entity<User>().HasData(
+            modelBuilder.Entity<Role>().HasData(
               new Role() { Id = 1 , Name="Admin",CreatedAt =  DateTime.UtcNow ,UpdatedAt = null},
               new Role() { Id = 2 , Name="User",CreatedAt =  DateTime.UtcNow ,UpdatedAt = null}
                );
