@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OLXWebApi.Domain.Entities;
+using OLXWebApi.Domain.Enums;
 using OLXWebApi.Shared.Helper;
 
 namespace OLXWebApi.Data.DbContexts
@@ -19,9 +20,9 @@ namespace OLXWebApi.Data.DbContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
-               new User() { Id = 1, Firstname = "Mukhammadkarim", Lastname = "Tukhtaboyev", Email = "dotnetgo@icloud.com",  UserRole = Domain.Enums.UserRole.User,Awatar = null, Password = PasswordHelper.Hash("12345678"),MyAdsList=null,MyAnnouncementList=null,IsActive=true, CreatedAt = DateTime.UtcNow, UpdatedAt = null },
-               new User() { Id = 2, Firstname = "Jamshid", Lastname = "Ma'ruf", Email = "wonderboy1w3@gmail.com",  UserRole = Domain.Enums.UserRole.User,Awatar = null, Password = PasswordHelper.Hash("12345678"),MyAdsList=null,MyAnnouncementList=null,IsActive=true, CreatedAt = DateTime.UtcNow, UpdatedAt = null },
-               new User() { Id = 3, Firstname = "Samandar", Lastname = "Ochilov", Email = "ochilovsamandar71@gmail.com", UserRole = Domain.Enums.UserRole.User, Password = PasswordHelper.Hash("12345678"), MyAdsList = null, MyAnnouncementList = null, IsActive = true, CreatedAt = DateTime.UtcNow, UpdatedAt = null }
+               new User() { Id = 1, Firstname = "Mukhammadkarim", Lastname = "Tukhtaboyev", Email = "dotnetgo@icloud.com",  UserRole = UserRole.User,Awatar = null, Password = PasswordHelper.Hash("12345678"),MyAdsList=null,MyAnnouncementList=null,IsActive=true, CreatedAt = DateTime.UtcNow, UpdatedAt = null },
+               new User() { Id = 2, Firstname = "Jamshid", Lastname = "Ma'ruf", Email = "wonderboy1w3@gmail.com",  UserRole = UserRole.User,Awatar = null, Password = PasswordHelper.Hash("12345678"),MyAdsList=null,MyAnnouncementList=null,IsActive=true, CreatedAt = DateTime.UtcNow, UpdatedAt = null },
+               new User() { Id = 3, Firstname = "Samandar", Lastname = "Ochilov", Email = "ochilovsamandar71@gmail.com", UserRole = UserRole.Admin,Awatar = null, Password = PasswordHelper.Hash("12345678"), MyAdsList = null, MyAnnouncementList = null, IsActive = true, CreatedAt = DateTime.UtcNow, UpdatedAt = null }
                //new User() { Id = 4, FirstName = "Muzaffar", LastName = "Nurillayev", Email = "nurillaewmuzaffar@gmail.com", Phone = "+998 995030110", RoleId = 5, Password = PasswordHelper.Hash("12345678"), CreatedAt = DateTime.UtcNow, UpdatedAt = null },
                //new User() { Id = 5, FirstName = "Azim", LastName = "Ochilov", Email = "azimochilov@icloud.com", Phone = "+998 991233999", RoleId = 6, Password = PasswordHelper.Hash("12345678"), CreatedAt = DateTime.UtcNow, UpdatedAt = null },
                //new User() { Id = 6, FirstName = "Abdulloh", LastName = "Ahmadjonov", Email = "abdulloh@icloud.com", Phone = "+998 991236999", RoleId = 1, Password = PasswordHelper.Hash("12345678"), CreatedAt = DateTime.UtcNow, UpdatedAt = null },

@@ -21,7 +21,7 @@ namespace OLXWebApi.Services.Service
             _mapper = mapper;
         }
 
-        public ValueTask<User> CreateAsync(UserForCreationDto dto)
+        public ValueTask<UserForResultDto> CreateAsync(UserForCreationDto dto)
         {
             throw new NotImplementedException();
         }
@@ -59,12 +59,16 @@ namespace OLXWebApi.Services.Service
             return await this._repository.DeleteAsync(id);
         }
 
-        public ValueTask<IEnumerable<User>> RetriveAllAsync()
+        public async ValueTask<IEnumerable<UserForResultDto>> RetriveAllAsync()
         {
-            throw new NotImplementedException();
+            var users = await this._repository.SelectAll()
+                .AsNoTracking()
+                .ToListAsync();
+
+            return this._mapper.Map<IEnumerable<UserForResultDto>>(users);
         }
 
-        public ValueTask<User> RetriveById(long id)
+        public ValueTask<UserForResultDto> RetriveById(long id)
         {
             throw new NotImplementedException();
         }
