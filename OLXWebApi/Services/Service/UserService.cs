@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using OLXWebApi.Controllers;
 using OLXWebApi.Data.IRepositories;
 using OLXWebApi.Domain.Entities;
+using OLXWebApi.Models;
 using OLXWebApi.Services.Dtos;
 using OLXWebApi.Services.Exceptions;
 using OLXWebApi.Services.IService;
@@ -30,12 +33,12 @@ namespace OLXWebApi.Services.Service
         {
             var oldUser = await this._repository.SelectByIdAsync(id);
             if (oldUser == null)
-                throw new OlxException(404, "User not found");
+                throw new NotFoundUserException(id);
 
             var exsistUser = await this._repository.SelectAll()
                 .FirstOrDefaultAsync(e => e.Email == dto.Email);
-            if (exsistUser != null && oldUser.Email != dto.Email)
-                throw new OlxException(400, "Email is already taken");
+            if (exsistUser!=null && exsistUser.Email.Equals(dto.Email))
+                throw new EmailAlreadyTakenException(dto.Email);
 
             var user = this._mapper.Map(dto, exsistUser ?? oldUser);
 
@@ -52,25 +55,26 @@ namespace OLXWebApi.Services.Service
         {
             var exsistUser = await this._repository.SelectByIdAsync(id);
             if (exsistUser == null)
-            {
-                throw new OlxException(404, "User not found");
-            }
-
+                throw new NotFoundUserException(id);
+            
             return await this._repository.DeleteAsync(id);
         }
 
         public async ValueTask<IEnumerable<UserForResultDto>> RetriveAllAsync()
         {
             var users = await this._repository.SelectAll()
-                .AsNoTracking()
                 .ToListAsync();
-
+            
             return this._mapper.Map<IEnumerable<UserForResultDto>>(users);
         }
 
-        public ValueTask<UserForResultDto> RetriveById(long id)
+        public async ValueTask<UserForResultDto> RetriveById(long id)
         {
-            throw new NotImplementedException();
+            User user = await _repository.SelectByIdAsync(id);
+            if (user == null)
+                throw new NotFoundUserException(id);
+                
+            return  this._mapper.Map<UserForResultDto>(user);
         }
     }
 }

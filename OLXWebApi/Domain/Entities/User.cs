@@ -12,8 +12,8 @@ namespace OLXWebApi.Domain.Entities
         public string Password { get; set; }
         public long RoleId { get; set; }
         public Role Role { get; set; }
-        public byte? Awatar { get; set; } 
-        
+        public byte? Awatar { get; set; }
+
         public List<MyAds> MyAdsList { get; set; } = new List<MyAds>();
         public List<Announcement> MyAnnouncementList { get; set; } = new List<Announcement>();
         public bool IsActive { get; set; } = true;

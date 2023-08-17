@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OLXWebApi.Services.Dtos;
+using OLXWebApi.Services.Exceptions;
 using OLXWebApi.Services.IService;
 
 namespace OLXWebApi.Controllers
@@ -16,7 +17,18 @@ namespace OLXWebApi.Controllers
             this.authService = authService;
         }
         [HttpPost("login")]
-        public async ValueTask<IActionResult> LoginAsync([FromBody] LoginDto dto) =>
-            Ok(await authService.AuthenticateAsync(dto));
+        public async ValueTask<IActionResult> LoginAsync([FromBody] LoginDto dto)
+        {
+            try
+            {
+               return Ok(await authService.AuthenticateAsync(dto));
+            }catch(EmailOrPasswordIncorrectException e)
+            {
+                return BadRequest(e.Message);
+            }catch(Exception ex)
+            {
+                return Conflict(ex.Message);
+            }
+        }
     }
 }
