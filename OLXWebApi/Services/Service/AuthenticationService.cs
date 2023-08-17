@@ -40,7 +40,7 @@ namespace OLXWebApi.Services.Service
         {
            var tokenHandler = new JwtSecurityTokenHandler();
            var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:Key"]);
-            var tokenDescriptor = new SecurityTokenDescriptor
+           var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {

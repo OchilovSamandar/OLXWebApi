@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using OLXWebApi.Data.IRepositories;
 using OLXWebApi.Domain.Entities;
 using OLXWebApi.Services.Dtos;
 using OLXWebApi.Services.Exceptions;
 using OLXWebApi.Services.IService;
+using OLXWebApi.Shared.Helper;
 
 namespace OLXWebApi.Services.Service
 {
@@ -19,14 +21,31 @@ namespace OLXWebApi.Services.Service
             _mapper = mapper;
         }
 
-        public ValueTask<User> CreateAsync(UserForCreationDto dto)
+        public ValueTask<UserForResultDto> CreateAsync(UserForCreationDto dto)
         {
             throw new NotImplementedException();
         }
 
-        public ValueTask<User> ModifyAsync(long id, UserForCreationDto dto)
+        public async ValueTask<UserForResultDto> ModifyAsync(long id, UserForCreationDto dto)
         {
-            throw new NotImplementedException();
+            var oldUser = await this._repository.SelectByIdAsync(id);
+            if (oldUser == null)
+                throw new OlxException(404, "User not found");
+
+            var exsistUser = await this._repository.SelectAll()
+                .FirstOrDefaultAsync(e => e.Email == dto.Email);
+            if (exsistUser != null && oldUser.Email != dto.Email)
+                throw new OlxException(400, "Email is already taken");
+
+            var user = this._mapper.Map(dto, exsistUser ?? oldUser);
+
+            user.Id = id;
+            user.Password =PasswordHelper.Hash(dto.Password);
+            user.UpdatedAt = DateTime.UtcNow;
+            var result = await this._repository.UpdateAsync(user);
+            await this._repository.SaveChangesAsync();
+
+            return this._mapper.Map<UserForResultDto>(result);
         }
 
         public async ValueTask<bool> RemoveAsync(long id)
@@ -40,12 +59,16 @@ namespace OLXWebApi.Services.Service
             return await this._repository.DeleteAsync(id);
         }
 
-        public ValueTask<IEnumerable<User>> RetriveAllAsync()
+        public async ValueTask<IEnumerable<UserForResultDto>> RetriveAllAsync()
         {
-            throw new NotImplementedException();
+            var users = await this._repository.SelectAll()
+                .AsNoTracking()
+                .ToListAsync();
+
+            return this._mapper.Map<IEnumerable<UserForResultDto>>(users);
         }
 
-        public ValueTask<User> RetriveById(long id)
+        public ValueTask<UserForResultDto> RetriveById(long id)
         {
             throw new NotImplementedException();
         }
