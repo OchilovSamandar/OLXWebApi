@@ -11,7 +11,7 @@ namespace OLXWebApi.Extensions
     {
         public static void AddCustomService(this IServiceCollection services)
         {
-            services.AddScoped<IAuthService,IAuthService>();
+            services.AddScoped<IAuthService,AuthenticationService>();
             services.AddScoped<IUserService, UserService>();
 
         }
