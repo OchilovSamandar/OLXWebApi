@@ -21,6 +21,7 @@ builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddCustomService();
 builder.Services.ConfigureSwagger();
+builder.Services.AddJwtService(builder.Configuration);
 
 var app = builder.Build();
 

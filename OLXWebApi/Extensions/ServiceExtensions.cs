@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using OLXWebApi.Services.IService;
 using OLXWebApi.Services.Service;
+using System.Text;
 
 namespace OLXWebApi.Extensions
 {
@@ -13,7 +15,6 @@ namespace OLXWebApi.Extensions
             services.AddScoped<IUserService, UserService>();
 
         }
-
         public static void ConfigureSwagger(this IServiceCollection services)
         {
             services.AddSwaggerGen(setup =>
@@ -39,6 +40,29 @@ namespace OLXWebApi.Extensions
                 {
                     { jwtSecurityScheme, Array.Empty<string>() }
                     });
+            });
+        }
+
+        public static void AddJwtService(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = configuration["Jwt:Issure"],
+                    ValidAudience = configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
+                    ClockSkew = TimeSpan.Zero
+                };
             });
         }
     }
