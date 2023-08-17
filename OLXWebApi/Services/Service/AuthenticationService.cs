@@ -45,7 +45,7 @@ namespace OLXWebApi.Services.Service
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                    new Claim("Id",user.Id.ToString()),
-                   new Claim(ClaimTypes.Role,user.UserRole.ToString()),
+                   new Claim(ClaimTypes.Role,user.Role.Name.ToString()),
                 }),
                 Audience = _configuration["JWT:Audience"],
                 Issuer = _configuration["JWT:Issure"],
