@@ -2,6 +2,7 @@
 using OLXWebApi.Data.DbContexts;
 using OLXWebApi.Data.IRepositories;
 using OLXWebApi.Domain.Entities.Commans;
+using System.Linq;
 
 namespace OLXWebApi.Data.Repositories
 {
