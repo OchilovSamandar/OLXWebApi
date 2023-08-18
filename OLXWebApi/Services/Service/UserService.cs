@@ -9,7 +9,7 @@ using OLXWebApi.Domain.Entities;
 using OLXWebApi.Domain.Enums;
 using OLXWebApi.Models;
 using OLXWebApi.Services.Dtos;
-using OLXWebApi.Services.Exceptions;
+using OLXWebApi.Services.Exceptions.UserExceptions;
 using OLXWebApi.Services.IService;
 using OLXWebApi.Shared.Helper;
 
