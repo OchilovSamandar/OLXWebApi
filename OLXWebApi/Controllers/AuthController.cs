@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OLXWebApi.Services.Dtos;
-using OLXWebApi.Services.Exceptions;
+using OLXWebApi.Services.Exceptions.UserExceptions;
 using OLXWebApi.Services.IService;
 
 namespace OLXWebApi.Controllers

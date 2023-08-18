@@ -12,6 +12,10 @@ namespace OLXWebApi.Services.Mappers
             CreateMap<User, UserForCreationDto>().ReverseMap();
             CreateMap<UserForResultDto, User>().ReverseMap();
 
+            CreateMap<Announcement, AnnouncementCreationDto>().ReverseMap();
+
+            CreateMap<Category,CategoryForCreationDto>().ReverseMap();
+
         }
     }
 }

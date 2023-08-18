@@ -13,6 +13,6 @@ namespace OLXWebApi.Domain.Entities
         public Category Category { get; set; }
         public long  UserId { get; set; }
         public User User { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; }=true;
     }
 }
