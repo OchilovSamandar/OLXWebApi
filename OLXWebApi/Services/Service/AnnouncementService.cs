@@ -34,7 +34,6 @@ namespace OLXWebApi.Services.Service
             if (categoryId == null)
                 throw new NotFoundCategoryException();
             
-
             var announcement = _mapper.Map<Announcement>(dto);
             var result = await _repository.InsertAsync(announcement);
 
