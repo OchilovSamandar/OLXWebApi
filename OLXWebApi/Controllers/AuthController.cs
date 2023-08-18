@@ -19,6 +19,7 @@ namespace OLXWebApi.Controllers
         [HttpPost]
         public async ValueTask<IActionResult> LoginAsync([FromBody] LoginDto dto)
         {
+            //token generate bo'lmayapti xato bor
             try
             {
                return Ok(await authService.AuthenticateAsync(dto));

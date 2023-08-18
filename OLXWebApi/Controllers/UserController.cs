@@ -10,7 +10,7 @@ namespace OLXWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "1")]
+    //[Authorize(Roles = "1")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -74,9 +74,21 @@ namespace OLXWebApi.Controllers
             {
                 return BadRequest(e.Message);
             }
-            
+        }
 
-            
+        [HttpPost]
+        public async ValueTask<IActionResult> PostUser(UserForCreationDto dto)
+        {
+            try
+            {
+                return Ok( await _userService.CreateAsync(dto));
+            }catch(EmailAlreadyTakenException e)
+            {
+                return Conflict(e.Message);
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
