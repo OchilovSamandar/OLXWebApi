@@ -9,6 +9,6 @@ namespace OLXWebApi.Services.IService
         ValueTask<Announcement> ModifyAsync(long id,AnnouncementCreationDto dto);
         ValueTask<bool> DeleteAsync(long id);
         ValueTask<Announcement> RetriveByIdAsync(long id);
-        ValueTask<Announcement> RetriveAllAsync();
+        ValueTask<IEnumerable<Announcement>> RetriveAllAsync();
     }
 }

@@ -2,6 +2,8 @@
 using OLXWebApi.Data.IRepositories;
 using OLXWebApi.Domain.Entities;
 using OLXWebApi.Services.Dtos;
+using OLXWebApi.Services.Exceptions.AnnouncementExceptions;
+using OLXWebApi.Services.Exceptions.CategoryException;
 using OLXWebApi.Services.IService;
 
 namespace OLXWebApi.Services.Service
@@ -9,7 +11,16 @@ namespace OLXWebApi.Services.Service
     public class AnnouncementService : IAnnouncementService
     {
         private readonly IRepository<Announcement> _repository;
+        private readonly IRepository<Category> _categoryRepository;
         private readonly IMapper _mapper;
+
+        public AnnouncementService(IRepository<Announcement> repository,
+            IRepository<Category> categoryRepository, IMapper mapper)
+        {
+            _repository = repository;
+            _categoryRepository = categoryRepository;
+            _mapper = mapper;
+        }
 
         public AnnouncementService(IRepository<Announcement> repository, IMapper mapper)
         {
@@ -19,31 +30,52 @@ namespace OLXWebApi.Services.Service
 
         public async ValueTask<Announcement> AddAsync(AnnouncementCreationDto dto)
         {
+            var categoryId = await _categoryRepository.SelectByIdAsync(dto.CategoryId);
+            if (categoryId == null)
+                throw new NotFoundCategoryException();
             
+
             var announcement = _mapper.Map<Announcement>(dto);
             var result = await _repository.InsertAsync(announcement);
 
             return result;
         }
 
-        public ValueTask<bool> DeleteAsync(long id)
+        public async ValueTask<bool> DeleteAsync(long id)
         {
-            throw new NotImplementedException();
+           var announcementId =  await _repository.SelectByIdAsync(id);
+            if (announcementId == null)
+                throw new NotFoundAnnouncementException();
+
+            var result  = await _repository.DeleteAsync(id);
+
+            return result;
         }
 
-        public ValueTask<Announcement> ModifyAsync(long id, AnnouncementCreationDto dto)
+        public async ValueTask<Announcement> ModifyAsync(long id, AnnouncementCreationDto dto)
         {
-            throw new NotImplementedException();
+           var announcement =  await _repository.SelectByIdAsync(id);
+            if(announcement == null)
+                throw new NotFoundAnnouncementException();
+
+            return await _repository.UpdateAsync(announcement);
         }
 
-        public ValueTask<Announcement> RetriveAllAsync()
+        public  async ValueTask<IEnumerable<Announcement>> RetriveAllAsync()
         {
-            throw new NotImplementedException();
+           var announcements = _repository.SelectAll().ToList();
+
+            return announcements;
         }
 
-        public ValueTask<Announcement> RetriveByIdAsync(long id)
+        public async ValueTask<Announcement> RetriveByIdAsync(long id)
         {
-            throw new NotImplementedException();
+            var idAnnouncement = await _repository.SelectByIdAsync(id); 
+            if(idAnnouncement == null)
+                throw new NotFoundAnnouncementException();
+
+            var result = await _repository.SelectByIdAsync(id);
+            return result;
         }
     }
 }
