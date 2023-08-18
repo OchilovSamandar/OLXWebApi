@@ -37,13 +37,55 @@ namespace OLXWebApi.Controllers
         {
             try
             {
-                return Ok(_categoryService.ModifyAsync( id ,dto));
+                return Ok(await _categoryService.ModifyAsync( id ,dto));
             }catch(NotFoundCategoryException ex)
             {
                 return BadRequest(ex.Message);
             }catch(CategoryNameAlreadyExsistException e) 
             {
                 return BadRequest(e.Message);
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete]
+        public async ValueTask<IActionResult> DeleteCategory(long id)
+        {
+            try
+            {
+                return Ok( await _categoryService.RemoveAsync(id));
+            }catch (NotFoundCategoryException ex)
+            {
+                return BadRequest(ex.Message);
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async ValueTask<IActionResult> GetByIdCategory(long id)
+        {
+            try
+            {
+                return Ok(await _categoryService.RetriveByIdAsync(id));
+            }catch( NotFoundCategoryException ex)
+            {
+                return BadRequest(ex.Message);
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet]
+        public async ValueTask<IActionResult> GetAllCategory()
+        {
+            try
+            {
+                return Ok(await _categoryService.RetriveAllAsync());
             }catch(Exception e)
             {
                 return BadRequest(e.Message);
