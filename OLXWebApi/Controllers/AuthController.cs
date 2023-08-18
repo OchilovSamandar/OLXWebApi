@@ -16,7 +16,7 @@ namespace OLXWebApi.Controllers
         {
             this.authService = authService;
         }
-        [HttpPost("login")]
+        [HttpPost]
         public async ValueTask<IActionResult> LoginAsync([FromBody] LoginDto dto)
         {
             try

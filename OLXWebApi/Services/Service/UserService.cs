@@ -37,7 +37,7 @@ namespace OLXWebApi.Services.Service
 
             var exsistUser = await this._repository.SelectAll()
                 .FirstOrDefaultAsync(e => e.Email == dto.Email);
-            if (exsistUser!=null && exsistUser.Email.Equals(dto.Email))
+            if (exsistUser!=null && !exsistUser.Email.Equals(dto.Email))
                 throw new EmailAlreadyTakenException(dto.Email);
 
             var user = this._mapper.Map(dto, exsistUser ?? oldUser);
@@ -46,7 +46,6 @@ namespace OLXWebApi.Services.Service
             user.Password =PasswordHelper.Hash(dto.Password);
             user.UpdatedAt = DateTime.UtcNow;
             var result = await this._repository.UpdateAsync(user);
-            await this._repository.SaveChangesAsync();
 
             return this._mapper.Map<UserForResultDto>(result);
         }

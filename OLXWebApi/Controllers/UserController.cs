@@ -10,7 +10,7 @@ namespace OLXWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "1")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
