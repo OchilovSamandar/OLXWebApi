@@ -33,7 +33,7 @@ namespace OLXWebApi.Services.Service
 
         public async ValueTask<Category> ModifyAsync(long id, CategoryForCreationDto dto)
         {
-            var idExsist = _repository.SelectByIdAsync(id);
+            var idExsist =await _repository.SelectByIdAsync(id);
             if(idExsist == null)
                 throw new NotFoundCategoryException();
 
@@ -49,19 +49,31 @@ namespace OLXWebApi.Services.Service
             return result;
         }
 
-        public ValueTask<bool> RemoveAsync(long id)
+        public async ValueTask<bool> RemoveAsync(long id)
         {
-            throw new NotImplementedException();
+            var category = await _repository.SelectByIdAsync(id);
+            if (category == null)
+                throw new NotFoundCategoryException();
+
+           var result = await _repository.DeleteAsync(id);
+
+            return result;
         }
 
-        public ValueTask<Category> RetriveAllAsync()
+        public async  ValueTask<IEnumerable<Category>> RetriveAllAsync()
         {
-            throw new NotImplementedException();
+           IEnumerable<Category> result =_repository.SelectAll().ToList();
+
+            return result;
         }
 
-        public ValueTask<Category> RetriveByIdAsync(long id)
+        public async ValueTask<Category> RetriveByIdAsync(long id)
         {
-            throw new NotImplementedException();
+          var category = await _repository.SelectByIdAsync(id);
+            if(category == null)
+                throw new NotFoundCategoryException();
+
+            return category;
         }
     }
 }
