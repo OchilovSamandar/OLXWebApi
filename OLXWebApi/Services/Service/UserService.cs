@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Extensions;
 using OLXWebApi.Controllers;
 using OLXWebApi.Data.IRepositories;
 using OLXWebApi.Domain.Entities;
+using OLXWebApi.Domain.Enums;
 using OLXWebApi.Models;
 using OLXWebApi.Services.Dtos;
 using OLXWebApi.Services.Exceptions;
@@ -24,9 +26,20 @@ namespace OLXWebApi.Services.Service
             _mapper = mapper;
         }
 
-        public ValueTask<UserForResultDto> CreateAsync(UserForCreationDto dto)
+        public async ValueTask<UserForResultDto> CreateAsync(UserForCreationDto dto)
         {
-            throw new NotImplementedException();
+            var user = _mapper.Map<User>(dto);
+
+            var exsistUser =await _repository.SelectAll().FirstOrDefaultAsync(u => u.Email == user.Email);
+
+            if (exsistUser != null)
+                throw new EmailAlreadyTakenException(user.Email);
+
+            user.Password = PasswordHelper.Hash(user.Password);
+            user.Role = UserRole.User;
+            var result = await _repository.InsertAsync(user);
+
+            return _mapper.Map<UserForResultDto>(result);
         }
 
         public async ValueTask<UserForResultDto> ModifyAsync(long id, UserForCreationDto dto)
