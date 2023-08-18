@@ -16,7 +16,7 @@ namespace OLXWebApi.Controllers
         {
             _announcementService = announcementService;
         }
-
+        //Announcement HTTPost method ishlamayapti
         [HttpPost]
         public async ValueTask<IActionResult> PostAnnouncement([FromBody] AnnouncementCreationDto dto)
         {
@@ -34,7 +34,7 @@ namespace OLXWebApi.Controllers
         {
             try
             {
-                return Ok(_announcementService.RetriveByIdAsync(id));
+                return Ok(await _announcementService.RetriveByIdAsync(id));
             }catch(NotFoundAnnouncementException e)
             {
                 return BadRequest(e.Message);
@@ -49,7 +49,7 @@ namespace OLXWebApi.Controllers
         {
             try
             {
-                return Ok(_announcementService.RetriveAllAsync());
+                return Ok(await _announcementService.RetriveAllAsync());
             }catch(Exception e)
             {
                 return BadRequest(e.Message);
@@ -61,7 +61,7 @@ namespace OLXWebApi.Controllers
         {
             try
             {
-                return Ok(_announcementService.DeleteAsync(id));
+                return Ok(await _announcementService.DeleteAsync(id));
             }catch(NotFoundAnnouncementException e)
             {
                 return NotFound(e.Message);
@@ -77,7 +77,7 @@ namespace OLXWebApi.Controllers
         {
             try
             {
-                return Ok(_announcementService.ModifyAsync(id, dto));
+                return Ok(await _announcementService.ModifyAsync(id, dto));
             }catch(NotFoundAnnouncementException ex)
             {
                 return BadRequest(ex.Message);
