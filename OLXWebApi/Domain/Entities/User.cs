@@ -13,8 +13,8 @@ namespace OLXWebApi.Domain.Entities
         public UserRole Role { get; set; }
         public byte? Awatar { get; set; }
 
-        public List<MyAds> MyAdsList { get; set; } = new List<MyAds>();
-        public List<Announcement> MyAnnouncementList { get; set; } = new List<Announcement>();
+        public List<MyAds> MyAdsList { get; set; } 
+        public List<Announcement> MyAnnouncementList { get; set; } 
         public bool IsActive { get; set; } = true;
     }
 }
