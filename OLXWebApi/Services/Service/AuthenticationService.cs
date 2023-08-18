@@ -40,13 +40,15 @@ namespace OLXWebApi.Services.Service
         {
            var tokenHandler = new JwtSecurityTokenHandler();
            var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:Key"]);
-           var tokenDescriptor = new SecurityTokenDescriptor
-            {
+            //string v = user.Role.Name.ToString();
+            //Console.WriteLine(v);
+            var tokenDescriptor = new SecurityTokenDescriptor
+           {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                    new Claim("Id",user.Id.ToString()),
-                   new Claim(ClaimTypes.Role,user.Role.Name.ToString()),
-                }),
+                   new Claim(ClaimTypes.Role,user.Role.ToString()),
+        }),
                 Audience = _configuration["JWT:Audience"],
                 Issuer = _configuration["JWT:Issure"],
                 IssuedAt = DateTime.UtcNow,

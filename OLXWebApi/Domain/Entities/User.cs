@@ -10,8 +10,7 @@ namespace OLXWebApi.Domain.Entities
         public string Lastname { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public long RoleId { get; set; }
-        public Role Role { get; set; }
+        public UserRole Role { get; set; }
         public byte? Awatar { get; set; }
 
         public List<MyAds> MyAdsList { get; set; } = new List<MyAds>();

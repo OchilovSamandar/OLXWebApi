@@ -12,8 +12,8 @@ using OLXWebApi.Data.DbContexts;
 namespace OLXWebApi.Migrations
 {
     [DbContext(typeof(OlxDbContext))]
-    [Migration("20230817093543_f")]
-    partial class f
+    [Migration("20230818050726_second")]
+    partial class second
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -157,13 +157,13 @@ namespace OLXWebApi.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 8, 17, 9, 35, 43, 380, DateTimeKind.Utc).AddTicks(1769),
+                            CreatedAt = new DateTime(2023, 8, 18, 5, 7, 26, 177, DateTimeKind.Utc).AddTicks(7035),
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 8, 17, 9, 35, 43, 380, DateTimeKind.Utc).AddTicks(1770),
+                            CreatedAt = new DateTime(2023, 8, 18, 5, 7, 26, 177, DateTimeKind.Utc).AddTicks(7037),
                             Name = "User"
                         });
                 });
@@ -201,15 +201,13 @@ namespace OLXWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
 
@@ -217,35 +215,35 @@ namespace OLXWebApi.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 8, 17, 9, 35, 43, 22, DateTimeKind.Utc).AddTicks(7457),
+                            CreatedAt = new DateTime(2023, 8, 18, 5, 7, 25, 800, DateTimeKind.Utc).AddTicks(6723),
                             Email = "dotnetgo@icloud.com",
                             Firstname = "Mukhammadkarim",
                             IsActive = true,
                             Lastname = "Tukhtaboyev",
-                            Password = "$2a$11$XPV5tLISWxnpoDp39zR9t.mEM2kz7aY5icl1QYxRXiRyoN9qNoTiu",
-                            RoleId = 2L
+                            Password = "$2a$11$ykCjl63RoiwN/gDXy6Cak.OqhbrQxjYYOK65hvWqaPP8oE6x7A9RK",
+                            Role = 0
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 8, 17, 9, 35, 43, 202, DateTimeKind.Utc).AddTicks(5929),
+                            CreatedAt = new DateTime(2023, 8, 18, 5, 7, 25, 984, DateTimeKind.Utc).AddTicks(8837),
                             Email = "wonderboy1w3@gmail.com",
                             Firstname = "Jamshid",
                             IsActive = true,
                             Lastname = "Ma'ruf",
-                            Password = "$2a$11$6894/edpwmuNfvqFDqoEdOYUbBE6wt5ueVYAIM41bXC3BYC.sJ8cK",
-                            RoleId = 2L
+                            Password = "$2a$11$zDBGUz.AiYazB0jdMu9bdO0DL5mlYOh90FhmAo2ofQQmFECX7jkBC",
+                            Role = 0
                         },
                         new
                         {
                             Id = 3L,
-                            CreatedAt = new DateTime(2023, 8, 17, 9, 35, 43, 380, DateTimeKind.Utc).AddTicks(1274),
+                            CreatedAt = new DateTime(2023, 8, 18, 5, 7, 26, 176, DateTimeKind.Utc).AddTicks(7821),
                             Email = "ochilovsamandar71@gmail.com",
                             Firstname = "Samandar",
                             IsActive = true,
                             Lastname = "Ochilov",
-                            Password = "$2a$11$C8T1BBFBDKP9zd3TUxJ/BOjkHpXI.CBOYTAYOHMcBLsd2WwaXlNh2",
-                            RoleId = 1L
+                            Password = "$2a$11$KW6fvg5sZe.jf8BBOQnRaud6.LwyhwBjusQ86ykXWBftgrP1SSvxW",
+                            Role = 1
                         });
                 });
 
@@ -281,17 +279,6 @@ namespace OLXWebApi.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("Announcement");
-                });
-
-            modelBuilder.Entity("OLXWebApi.Domain.Entities.User", b =>
-                {
-                    b.HasOne("OLXWebApi.Domain.Entities.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("OLXWebApi.Domain.Entities.User", b =>

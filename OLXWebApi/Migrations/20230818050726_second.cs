@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OLXWebApi.Migrations
 {
-    public partial class f : Migration
+    public partial class second : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,7 +50,7 @@ namespace OLXWebApi.Migrations
                     Lastname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RoleId = table.Column<long>(type: "bigint", nullable: false),
+                    Role = table.Column<int>(type: "int", nullable: false),
                     Awatar = table.Column<byte>(type: "tinyint", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -59,12 +59,6 @@ namespace OLXWebApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -131,27 +125,21 @@ namespace OLXWebApi.Migrations
             migrationBuilder.InsertData(
                 table: "Role",
                 columns: new[] { "Id", "CreatedAt", "Name", "UpdatedAt" },
-                values: new object[] { 1L, new DateTime(2023, 8, 17, 9, 35, 43, 380, DateTimeKind.Utc).AddTicks(1769), "Admin", null });
-
-            migrationBuilder.InsertData(
-                table: "Role",
-                columns: new[] { "Id", "CreatedAt", "Name", "UpdatedAt" },
-                values: new object[] { 2L, new DateTime(2023, 8, 17, 9, 35, 43, 380, DateTimeKind.Utc).AddTicks(1770), "User", null });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Awatar", "CreatedAt", "Email", "Firstname", "IsActive", "Lastname", "Password", "RoleId", "UpdatedAt" },
-                values: new object[] { 1L, null, new DateTime(2023, 8, 17, 9, 35, 43, 22, DateTimeKind.Utc).AddTicks(7457), "dotnetgo@icloud.com", "Mukhammadkarim", true, "Tukhtaboyev", "$2a$11$XPV5tLISWxnpoDp39zR9t.mEM2kz7aY5icl1QYxRXiRyoN9qNoTiu", 2L, null });
+                values: new object[,]
+                {
+                    { 1L, new DateTime(2023, 8, 18, 5, 7, 26, 177, DateTimeKind.Utc).AddTicks(7035), "Admin", null },
+                    { 2L, new DateTime(2023, 8, 18, 5, 7, 26, 177, DateTimeKind.Utc).AddTicks(7037), "User", null }
+                });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "Awatar", "CreatedAt", "Email", "Firstname", "IsActive", "Lastname", "Password", "RoleId", "UpdatedAt" },
-                values: new object[] { 2L, null, new DateTime(2023, 8, 17, 9, 35, 43, 202, DateTimeKind.Utc).AddTicks(5929), "wonderboy1w3@gmail.com", "Jamshid", true, "Ma'ruf", "$2a$11$6894/edpwmuNfvqFDqoEdOYUbBE6wt5ueVYAIM41bXC3BYC.sJ8cK", 2L, null });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Awatar", "CreatedAt", "Email", "Firstname", "IsActive", "Lastname", "Password", "RoleId", "UpdatedAt" },
-                values: new object[] { 3L, null, new DateTime(2023, 8, 17, 9, 35, 43, 380, DateTimeKind.Utc).AddTicks(1274), "ochilovsamandar71@gmail.com", "Samandar", true, "Ochilov", "$2a$11$C8T1BBFBDKP9zd3TUxJ/BOjkHpXI.CBOYTAYOHMcBLsd2WwaXlNh2", 1L, null });
+                columns: new[] { "Id", "Awatar", "CreatedAt", "Email", "Firstname", "IsActive", "Lastname", "Password", "Role", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { 1L, null, new DateTime(2023, 8, 18, 5, 7, 25, 800, DateTimeKind.Utc).AddTicks(6723), "dotnetgo@icloud.com", "Mukhammadkarim", true, "Tukhtaboyev", "$2a$11$ykCjl63RoiwN/gDXy6Cak.OqhbrQxjYYOK65hvWqaPP8oE6x7A9RK", 0, null },
+                    { 2L, null, new DateTime(2023, 8, 18, 5, 7, 25, 984, DateTimeKind.Utc).AddTicks(8837), "wonderboy1w3@gmail.com", "Jamshid", true, "Ma'ruf", "$2a$11$zDBGUz.AiYazB0jdMu9bdO0DL5mlYOh90FhmAo2ofQQmFECX7jkBC", 0, null },
+                    { 3L, null, new DateTime(2023, 8, 18, 5, 7, 26, 176, DateTimeKind.Utc).AddTicks(7821), "ochilovsamandar71@gmail.com", "Samandar", true, "Ochilov", "$2a$11$KW6fvg5sZe.jf8BBOQnRaud6.LwyhwBjusQ86ykXWBftgrP1SSvxW", 1, null }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Announcements_CategoryId",
@@ -172,17 +160,15 @@ namespace OLXWebApi.Migrations
                 name: "IX_MyAds_UserId",
                 table: "MyAds",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleId",
-                table: "Users",
-                column: "RoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "MyAds");
+
+            migrationBuilder.DropTable(
+                name: "Role");
 
             migrationBuilder.DropTable(
                 name: "Announcements");
@@ -192,9 +178,6 @@ namespace OLXWebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Role");
         }
     }
 }
