@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OLXWebApi.Services.Dtos;
+using OLXWebApi.Services.Exceptions.AnnouncementExceptions;
 using OLXWebApi.Services.IService;
 
 namespace OLXWebApi.Controllers
@@ -25,6 +26,64 @@ namespace OLXWebApi.Controllers
             }catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async ValueTask<IActionResult> GetByID(long id)
+        {
+            try
+            {
+                return Ok(_announcementService.RetriveByIdAsync(id));
+            }catch(NotFoundAnnouncementException e)
+            {
+                return BadRequest(e.Message);
+            }catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public async ValueTask<IActionResult> GetAll()
+        {
+            try
+            {
+                return Ok(_announcementService.RetriveAllAsync());
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete]
+        public async ValueTask<IActionResult> DeleteAnnouncement(long id)
+        {
+            try
+            {
+                return Ok(_announcementService.DeleteAsync(id));
+            }catch(NotFoundAnnouncementException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest( e.Message);
+            }
+        }
+
+        [HttpPut]
+        public async ValueTask<IActionResult> PutAnnouncement(long id,AnnouncementCreationDto dto)
+        {
+            try
+            {
+                return Ok(_announcementService.ModifyAsync(id, dto));
+            }catch(NotFoundAnnouncementException ex)
+            {
+                return BadRequest(ex.Message);
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
             }
         }
     }
