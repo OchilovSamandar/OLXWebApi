@@ -16,6 +16,8 @@ namespace OLXWebApi.Services.Mappers
 
             CreateMap<Category,CategoryForCreationDto>().ReverseMap();
 
+            CreateMap<MyAds,MyAdsCreationDto>().ReverseMap();
+
         }
     }
 }
