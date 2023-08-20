@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using OLXWebApi.Controllers;
 using OLXWebApi.Data.IRepositories;
 using OLXWebApi.Domain.Entities;
 using OLXWebApi.Services.Dtos;
+using OLXWebApi.Services.Exceptions.AnnouncementExceptions;
 using OLXWebApi.Services.IService;
 
 namespace OLXWebApi.Services.Service
@@ -38,9 +40,9 @@ namespace OLXWebApi.Services.Service
         {
             var announcement = await _announcementRepository.SelectByIdAsync(dto.AnnouncementId);
             if (announcement == null) 
-                throw new ArgumentNullException(nameof(announcement));
+                throw new NotFoundAnnouncementException();
             var user = await _userRepository.SelectByIdAsync(dto.UserId);
-            if (user == null) throw new ArgumentNullException(nameof(user));
+            if (user == null) throw new NotFoundUserException(user.Id);
 
            // var map = await _mapper.Map<MyAds>(MyAdsCreationDto);
            MyAds myAds = new MyAds();

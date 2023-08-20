@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OLXWebApi.Domain.Entities;
 using OLXWebApi.Services.Dtos;
+using OLXWebApi.Services.Exceptions.AnnouncementExceptions;
 using OLXWebApi.Services.IService;
 
 namespace OLXWebApi.Controllers
@@ -23,6 +24,12 @@ namespace OLXWebApi.Controllers
             try
             {
                 return Ok(await _myAdsService.AddAsync(dto));
+            }catch(NotFoundAnnouncementException e)
+            {
+                return NotFound(e.Message);
+            }catch(NotFoundUserException e)
+            {
+                return NotFound(e.Message);
             }catch(ArgumentNullException ex)
             {
                 return BadRequest(ex.Message);
