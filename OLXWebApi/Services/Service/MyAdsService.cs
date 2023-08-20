@@ -1,4 +1,5 @@
-﻿using OLXWebApi.Data.IRepositories;
+﻿using AutoMapper;
+using OLXWebApi.Data.IRepositories;
 using OLXWebApi.Domain.Entities;
 using OLXWebApi.Services.Dtos;
 using OLXWebApi.Services.IService;
@@ -10,6 +11,12 @@ namespace OLXWebApi.Services.Service
         private readonly IRepository<MyAds> _repository;
         private readonly IRepository<Announcement> _announcementRepository;
         private readonly IRepository<User> _userRepository;
+        private readonly IMapper _mapper;
+
+        public MyAdsService(IRepository<MyAds> repository, IRepository<Announcement> announcementRepository, IRepository<User> userRepository, IMapper mapper) : this(repository, announcementRepository, userRepository)
+        {
+            _mapper = mapper;
+        }
 
         public MyAdsService(IRepository<MyAds> repository, IRepository<Announcement> announcementRepository,
             IRepository<User> userRepository) : this(repository, announcementRepository)
@@ -30,9 +37,19 @@ namespace OLXWebApi.Services.Service
         public async ValueTask<MyAds> AddAsync(MyAdsCreationDto dto)
         {
             var announcement = await _announcementRepository.SelectByIdAsync(dto.AnnouncementId);
+            if (announcement == null) 
+                throw new ArgumentNullException(nameof(announcement));
             var user = await _userRepository.SelectByIdAsync(dto.UserId);
+            if (user == null) throw new ArgumentNullException(nameof(user));
 
+           // var map = await _mapper.Map<MyAds>(MyAdsCreationDto);
+           MyAds myAds = new MyAds();
+            myAds.AnnouncementId = dto.AnnouncementId;
+            myAds.UserId = dto.UserId;
+            
+             var result =await _repository.InsertAsync(myAds);
 
+            return result;
         }
 
         public ValueTask<MyAds> ModifyAsync(MyAdsCreationDto dto)
@@ -40,14 +57,20 @@ namespace OLXWebApi.Services.Service
             throw new NotImplementedException();
         }
 
-        public ValueTask<bool> RemoveAsync(long id)
+        public async ValueTask<bool> RemoveAsync(long id)
         {
-            throw new NotImplementedException();
+            if(id == 0) throw new ArgumentNullException(nameof(id));    
+           var result = await _repository.DeleteAsync(id);
+
+            return result;
         }
 
         public ValueTask<IEnumerable<MyAds>> SelectAllAsync()
         {
-            throw new NotImplementedException();
+            IQueryable<MyAds> myAds = _repository.SelectAll();
+            
+
+            return myAds;
         }
 
         public ValueTask<MyAds> SelectByIdAsync(long id)
