@@ -65,11 +65,15 @@ namespace OLXWebApi.Services.Service
             return result;
         }
 
-        public ValueTask<IEnumerable<MyAds>> SelectAllAsync()
+        public IRepository<MyAds> Get_repository()
         {
-            IQueryable<MyAds> myAds = _repository.SelectAll();
-            
+            return _repository;
+        }
 
+        public async ValueTask<IEnumerable<MyAds>> SelectAllAsync()
+        {
+            var myAds = _repository.SelectAll().ToList();
+            
             return myAds;
         }
 
