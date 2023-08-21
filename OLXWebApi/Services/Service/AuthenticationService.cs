@@ -40,7 +40,7 @@ namespace OLXWebApi.Services.Service
         {
            var tokenHandler = new JwtSecurityTokenHandler();
            var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:Key"]);
-            //string v = user.Role.Name.ToString();
+            //string v = u ;
             //Console.WriteLine(v);
             var tokenDescriptor = new SecurityTokenDescriptor
            {
@@ -50,7 +50,7 @@ namespace OLXWebApi.Services.Service
                    new Claim(ClaimTypes.Role,user.Role.ToString()),
         }),
                 Audience = _configuration["JWT:Audience"],
-                Issuer = _configuration["JWT:Issure"],
+                Issuer = _configuration["JWT:Issuer"],
                 IssuedAt = DateTime.UtcNow,
                 Expires = DateTime.UtcNow.AddMinutes(double.Parse(_configuration["JWT:Expire"])),
                 SigningCredentials = new SigningCredentials(

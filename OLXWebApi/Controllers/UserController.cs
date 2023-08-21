@@ -10,7 +10,7 @@ namespace OLXWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = "1")]
+    [Authorize(Roles = "Admin")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -76,7 +76,7 @@ namespace OLXWebApi.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public async ValueTask<IActionResult> PostUser(UserForCreationDto dto)
         {
             try

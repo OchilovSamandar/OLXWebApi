@@ -117,53 +117,14 @@ namespace OLXWebApi.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AnnouncementId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("MyAds");
-                });
-
-            modelBuilder.Entity("OLXWebApi.Domain.Entities.Role", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            CreatedAt = new DateTime(2023, 8, 18, 12, 47, 52, 915, DateTimeKind.Utc).AddTicks(1045),
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            CreatedAt = new DateTime(2023, 8, 18, 12, 47, 52, 915, DateTimeKind.Utc).AddTicks(1048),
-                            Name = "User"
-                        });
                 });
 
             modelBuilder.Entity("OLXWebApi.Domain.Entities.User", b =>
@@ -199,8 +160,9 @@ namespace OLXWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -208,41 +170,6 @@ namespace OLXWebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            CreatedAt = new DateTime(2023, 8, 18, 12, 47, 52, 518, DateTimeKind.Utc).AddTicks(7484),
-                            Email = "dotnetgo@icloud.com",
-                            Firstname = "Mukhammadkarim",
-                            IsActive = true,
-                            Lastname = "Tukhtaboyev",
-                            Password = "$2a$11$FwddZHBX84V8SJHEYFfZwuGOJbBq6Y0r9fgqUqapqwQopaJC0ktUK",
-                            Role = 0
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            CreatedAt = new DateTime(2023, 8, 18, 12, 47, 52, 713, DateTimeKind.Utc).AddTicks(7167),
-                            Email = "wonderboy1w3@gmail.com",
-                            Firstname = "Jamshid",
-                            IsActive = true,
-                            Lastname = "Ma'ruf",
-                            Password = "$2a$11$wiE5R7ux8nH.RSCufdTF/uUzu2QEhZ6YevODMTpDAoK.2Xvm/6bO2",
-                            Role = 0
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            CreatedAt = new DateTime(2023, 8, 18, 12, 47, 52, 913, DateTimeKind.Utc).AddTicks(7350),
-                            Email = "ochilovsamandar71@gmail.com",
-                            Firstname = "Samandar",
-                            IsActive = true,
-                            Lastname = "Ochilov",
-                            Password = "$2a$11$Kely.XqO4AAcku7gU8vQuO6b.r/fd0cXqcljEnD4scwRvmJNTaNTa",
-                            Role = 1
-                        });
                 });
 
             modelBuilder.Entity("OLXWebApi.Domain.Entities.Announcement", b =>
@@ -266,17 +193,11 @@ namespace OLXWebApi.Migrations
 
             modelBuilder.Entity("OLXWebApi.Domain.Entities.MyAds", b =>
                 {
-                    b.HasOne("OLXWebApi.Domain.Entities.Announcement", "Announcement")
-                        .WithMany()
-                        .HasForeignKey("AnnouncementId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("OLXWebApi.Domain.Entities.User", null)
                         .WithMany("MyAdsList")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Announcement");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("OLXWebApi.Domain.Entities.User", b =>

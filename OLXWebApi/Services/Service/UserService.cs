@@ -36,7 +36,7 @@ namespace OLXWebApi.Services.Service
                 throw new EmailAlreadyTakenException(user.Email);
 
             user.Password = PasswordHelper.Hash(user.Password);
-            user.Role = UserRole.User;
+            user.Role = UserRole.User.ToString();
             var result = await _repository.InsertAsync(user);
 
             return _mapper.Map<UserForResultDto>(result);
