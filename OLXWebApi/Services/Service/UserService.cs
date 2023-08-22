@@ -86,6 +86,7 @@ namespace OLXWebApi.Services.Service
         public async ValueTask<IEnumerable<UserForResultDto>> RetriveAllAsync()
         {
             var users = await this._repository.SelectAll()
+                .AsNoTracking()
                 .ToListAsync();
             
             return this._mapper.Map<IEnumerable<UserForResultDto>>(users);
