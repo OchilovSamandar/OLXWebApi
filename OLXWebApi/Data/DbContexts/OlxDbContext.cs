@@ -17,6 +17,7 @@ namespace OLXWebApi.Data.DbContexts
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<MyAds> MyAds { get; set; }
         public DbSet<Category> Category { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,10 +27,10 @@ namespace OLXWebApi.Data.DbContexts
             //   new User() { Id = 3, Firstname = "Samandar", Lastname = "Ochilov", Email = "ochilovsamandar71@gmail.com", Role = UserRole.Admin,Awatar = null, Password = PasswordHelper.Hash("12345678"), MyAdsList = null, MyAnnouncementList = null, IsActive = true, CreatedAt = DateTime.UtcNow, UpdatedAt = null }
             //   );
 
-            //modelBuilder.Entity<Role>().HasData(
-            //  new Role() { Id = 1 , Name="Admin",CreatedAt =  DateTime.UtcNow ,UpdatedAt = null},
-            //  new Role() { Id = 2 , Name="User",CreatedAt =  DateTime.UtcNow ,UpdatedAt = null}
-            //   );
+            modelBuilder.Entity<Role>().HasData(
+              new Role() { Id = 1 , Name="Admin",CreatedAt =  DateTime.UtcNow ,UpdatedAt = null},
+              new Role() { Id = 2 , Name="User",CreatedAt =  DateTime.UtcNow ,UpdatedAt = null}
+                );
         }
     }
 }
