@@ -11,5 +11,7 @@ namespace OLXWebApi.Services.IService
         ValueTask<UserForResultDto> ModifyAsync(long id, UserForCreationDto dto);
         ValueTask<bool> RemoveAsync(long id);
 
+        ValueTask<UserForResultDto> ModifyRoleAsync(long id, UserRoleForUpdateDto dto);
+
     }
 }
