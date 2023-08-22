@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OLXWebApi.Migrations
 {
-    public partial class g : Migration
+    public partial class h : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,7 +26,7 @@ namespace OLXWebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Role",
+                name: "Roles",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -37,7 +37,7 @@ namespace OLXWebApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Role", x => x.Id);
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,9 +60,9 @@ namespace OLXWebApi.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Role_RoleId",
+                        name: "FK_Users_Roles_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Role",
+                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -124,14 +124,14 @@ namespace OLXWebApi.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Role",
+                table: "Roles",
                 columns: new[] { "Id", "CreatedAt", "Name", "UpdatedAt" },
-                values: new object[] { 1L, new DateTime(2023, 8, 22, 11, 43, 5, 298, DateTimeKind.Utc).AddTicks(5404), "Admin", null });
+                values: new object[] { 1L, new DateTime(2023, 8, 22, 12, 45, 33, 691, DateTimeKind.Utc).AddTicks(4277), "Admin", null });
 
             migrationBuilder.InsertData(
-                table: "Role",
+                table: "Roles",
                 columns: new[] { "Id", "CreatedAt", "Name", "UpdatedAt" },
-                values: new object[] { 2L, new DateTime(2023, 8, 22, 11, 43, 5, 298, DateTimeKind.Utc).AddTicks(5406), "User", null });
+                values: new object[] { 2L, new DateTime(2023, 8, 22, 12, 45, 33, 691, DateTimeKind.Utc).AddTicks(4279), "User", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Announcements_CategoryId",
@@ -169,7 +169,7 @@ namespace OLXWebApi.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Role");
+                name: "Roles");
         }
     }
 }
