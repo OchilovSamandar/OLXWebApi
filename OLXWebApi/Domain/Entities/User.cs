@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OLXWebApi.Domain.Entities
 {
-    public class User :  IdentityUser 
+    public class User : Auditable 
     {
         public long  Id { get; set; }
         public string Firstname { get; set; }
@@ -13,7 +13,7 @@ namespace OLXWebApi.Domain.Entities
         public string Email { get; set; }
         public string Password { get; set; }
         public string RoleName { get; set; }
-        public Role Role { get; set; }
+        public UserRole Role { get; set; }
         public byte? Awatar { get; set; }
 
         public List<MyAds> MyAdsList { get; set; } 

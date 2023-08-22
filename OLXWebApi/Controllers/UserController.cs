@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OLXWebApi.Domain.Entities;
+using OLXWebApi.Domain.Enums;
 using OLXWebApi.Services.Dtos;
 using OLXWebApi.Services.Exceptions.UserExceptions;
 using OLXWebApi.Services.IService;
@@ -10,7 +11,6 @@ namespace OLXWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -92,7 +92,7 @@ namespace OLXWebApi.Controllers
         }
 
         [HttpPut("/role")]
-        public async ValueTask<IActionResult> PutUserRole(long id, UserRoleForUpdateDto dto)
+        public async ValueTask<IActionResult> PutUserRole(long id, UserRole dto)
         {
             try
             {

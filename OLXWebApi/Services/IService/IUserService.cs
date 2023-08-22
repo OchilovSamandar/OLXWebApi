@@ -1,4 +1,5 @@
 ﻿using OLXWebApi.Domain.Entities;
+using OLXWebApi.Domain.Enums;
 using OLXWebApi.Services.Dtos;
 
 namespace OLXWebApi.Services.IService
@@ -11,7 +12,7 @@ namespace OLXWebApi.Services.IService
         ValueTask<UserForResultDto> ModifyAsync(long id, UserForCreationDto dto);
         ValueTask<bool> RemoveAsync(long id);
 
-        ValueTask<UserForResultDto> ModifyRoleAsync(long id, UserRoleForUpdateDto dto);
+        ValueTask<UserForResultDto> ModifyRoleAsync(long id, UserRole role);
 
     }
 }

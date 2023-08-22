@@ -36,7 +36,7 @@ namespace OLXWebApi.Services.Service
                 throw new EmailAlreadyTakenException(user.Email);
 
             user.Password = PasswordHelper.Hash(user.Password);
-            user.Role = UserRole.User.ToString();
+            
             var result = await _repository.InsertAsync(user);
 
             return _mapper.Map<UserForResultDto>(result);
@@ -63,13 +63,12 @@ namespace OLXWebApi.Services.Service
             return this._mapper.Map<UserForResultDto>(result);
         }
 
-        public async ValueTask<UserForResultDto> ModifyRoleAsync(long id, UserRoleForUpdateDto dto)
+        public async ValueTask<UserForResultDto> ModifyRoleAsync(long id, UserRole role)
         {
            var user = await _repository.SelectByIdAsync(id);
             if(user == null)
                 throw new NotFoundUserException(id);
-
-            user.Role = dto.RoleName;
+            user.Role =role;
             await this._repository.SaveChangesAsync();
 
             return this._mapper.Map<UserForResultDto>(user);
