@@ -1,4 +1,5 @@
-﻿using OLXWebApi.Domain.Entities.Commans;
+﻿using Microsoft.EntityFrameworkCore;
+using OLXWebApi.Domain.Entities.Commans;
 
 namespace OLXWebApi.Domain.Entities
 {
