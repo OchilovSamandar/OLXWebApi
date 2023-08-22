@@ -19,6 +19,12 @@ namespace OLXWebApi.Services.Service
     {
         private readonly IRepository<User> _repository;
         private readonly IMapper _mapper;
+        private readonly IRepository<Role> _roleRepository;
+
+        public UserService(IRepository<User> repository, IMapper mapper, IRepository<Role> roleRepository) : this(repository, mapper)
+        {
+            _roleRepository = roleRepository;
+        }
 
         public UserService(IRepository<User> repository, IMapper mapper)
         {
@@ -36,6 +42,7 @@ namespace OLXWebApi.Services.Service
                 throw new EmailAlreadyTakenException(user.Email);
 
             user.Password = PasswordHelper.Hash(user.Password);
+            user.RoleId = 2;
             
             var result = await _repository.InsertAsync(user);
 
@@ -63,12 +70,14 @@ namespace OLXWebApi.Services.Service
             return this._mapper.Map<UserForResultDto>(result);
         }
 
-        public async ValueTask<UserForResultDto> ModifyRoleAsync(long id, UserRole role)
+        public async ValueTask<UserForResultDto> ModifyRoleAsync(long id, string role)
         {
            var user = await _repository.SelectByIdAsync(id);
             if(user == null)
                 throw new NotFoundUserException(id);
-            user.Role =role;
+
+            var role1 = await this._roleRepository.SelectAll() .FirstOrDefaultAsync(e => e.Name == role);
+            user.Role = role1 ;
             await this._repository.SaveChangesAsync();
 
             return this._mapper.Map<UserForResultDto>(user);
@@ -86,6 +95,7 @@ namespace OLXWebApi.Services.Service
         public async ValueTask<IEnumerable<UserForResultDto>> RetriveAllAsync()
         {
             var users = await this._repository.SelectAll()
+                .AsNoTracking()
                 .ToListAsync();
             
             return this._mapper.Map<IEnumerable<UserForResultDto>>(users);

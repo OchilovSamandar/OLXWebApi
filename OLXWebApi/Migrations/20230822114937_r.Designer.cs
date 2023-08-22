@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OLXWebApi.Data.DbContexts;
 
@@ -11,9 +12,10 @@ using OLXWebApi.Data.DbContexts;
 namespace OLXWebApi.Migrations
 {
     [DbContext(typeof(OlxDbContext))]
-    partial class OlxDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230822114937_r")]
+    partial class r
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,19 +149,19 @@ namespace OLXWebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Role");
 
                     b.HasData(
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 8, 22, 12, 6, 58, 915, DateTimeKind.Utc).AddTicks(9238),
+                            CreatedAt = new DateTime(2023, 8, 22, 11, 49, 37, 648, DateTimeKind.Utc).AddTicks(4457),
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 8, 22, 12, 6, 58, 915, DateTimeKind.Utc).AddTicks(9240),
+                            CreatedAt = new DateTime(2023, 8, 22, 11, 49, 37, 648, DateTimeKind.Utc).AddTicks(4460),
                             Name = "User"
                         });
                 });

@@ -12,8 +12,8 @@ using OLXWebApi.Data.DbContexts;
 namespace OLXWebApi.Migrations
 {
     [DbContext(typeof(OlxDbContext))]
-    [Migration("20230821081956_s")]
-    partial class s
+    [Migration("20230822114305_g")]
+    partial class g
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -129,6 +129,43 @@ namespace OLXWebApi.Migrations
                     b.ToTable("MyAds");
                 });
 
+            modelBuilder.Entity("OLXWebApi.Domain.Entities.Role", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Role");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CreatedAt = new DateTime(2023, 8, 22, 11, 43, 5, 298, DateTimeKind.Utc).AddTicks(5404),
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedAt = new DateTime(2023, 8, 22, 11, 43, 5, 298, DateTimeKind.Utc).AddTicks(5406),
+                            Name = "User"
+                        });
+                });
+
             modelBuilder.Entity("OLXWebApi.Domain.Entities.User", b =>
                 {
                     b.Property<long>("Id")
@@ -162,14 +199,15 @@ namespace OLXWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -200,6 +238,22 @@ namespace OLXWebApi.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("OLXWebApi.Domain.Entities.User", b =>
+                {
+                    b.HasOne("OLXWebApi.Domain.Entities.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("OLXWebApi.Domain.Entities.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("OLXWebApi.Domain.Entities.User", b =>

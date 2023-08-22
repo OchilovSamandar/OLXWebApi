@@ -11,6 +11,7 @@ namespace OLXWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Admin")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -92,11 +93,11 @@ namespace OLXWebApi.Controllers
         }
 
         [HttpPut("/role")]
-        public async ValueTask<IActionResult> PutUserRole(long id, UserRole dto)
+        public async ValueTask<IActionResult> PutUserRole(long id, string role)
         {
             try
             {
-                return Ok(await _userService.ModifyRoleAsync(id, dto));
+                return Ok(await _userService.ModifyRoleAsync(id, role));
             }catch(NotFoundUserException e)
             {
                 return Conflict(e.Message);
