@@ -63,6 +63,18 @@ namespace OLXWebApi.Services.Service
             return this._mapper.Map<UserForResultDto>(result);
         }
 
+        public async ValueTask<UserForResultDto> ModifyRoleAsync(long id, UserRoleForUpdateDto dto)
+        {
+           var user = await _repository.SelectByIdAsync(id);
+            if(user == null)
+                throw new NotFoundUserException(id);
+
+            user.Role = dto.RoleName;
+            await this._repository.SaveChangesAsync();
+
+            return this._mapper.Map<UserForResultDto>(user);
+        }
+
         public async ValueTask<bool> RemoveAsync(long id)
         {
             var exsistUser = await this._repository.SelectByIdAsync(id);

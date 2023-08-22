@@ -10,7 +10,7 @@ namespace OLXWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -83,6 +83,21 @@ namespace OLXWebApi.Controllers
             {
                 return Ok( await _userService.CreateAsync(dto));
             }catch(EmailAlreadyTakenException e)
+            {
+                return Conflict(e.Message);
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut("/role")]
+        public async ValueTask<IActionResult> PutUserRole(long id, UserRoleForUpdateDto dto)
+        {
+            try
+            {
+                return Ok(await _userService.ModifyRoleAsync(id, dto));
+            }catch(NotFoundUserException e)
             {
                 return Conflict(e.Message);
             }catch(Exception e)
