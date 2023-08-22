@@ -42,7 +42,7 @@ namespace OLXWebApi.Services.Service
                 throw new EmailAlreadyTakenException(user.Email);
 
             user.Password = PasswordHelper.Hash(user.Password);
-            user.RoleId = 2;
+            
             
             var result = await _repository.InsertAsync(user);
 
