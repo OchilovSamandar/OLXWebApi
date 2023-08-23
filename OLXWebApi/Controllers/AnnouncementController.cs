@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OLXWebApi.Services.Dtos;
 using OLXWebApi.Services.Exceptions.AnnouncementExceptions;
 using OLXWebApi.Services.IService;
@@ -22,7 +23,7 @@ namespace OLXWebApi.Controllers
         {
             try
             {
-               return Ok(await _announcementService.AddAsync(dto));
+                return Ok(await _announcementService.AddAsync(dto));
             }catch (Exception ex)
             {
                 return BadRequest(ex.Message);
