@@ -12,7 +12,18 @@ namespace OLXWebApi.Services.Service
     {
         private readonly IRepository<Announcement> _repository;
         private readonly IRepository<Category> _categoryRepository;
+        private readonly IRepository<User> _userRepository;
         private readonly IMapper _mapper;
+
+        public AnnouncementService(IRepository<Announcement> repository,
+            IRepository<Category> categoryRepository, IRepository<User> userRepository, 
+            IMapper mapper)
+        {
+            _repository = repository;
+            _categoryRepository = categoryRepository;
+            _userRepository = userRepository;
+            _mapper = mapper;
+        }
 
         public AnnouncementService(IRepository<Announcement> repository,
             IRepository<Category> categoryRepository, IMapper mapper)
@@ -35,6 +46,8 @@ namespace OLXWebApi.Services.Service
                 throw new NotFoundCategoryException();
             
             var announcement = _mapper.Map<Announcement>(dto);
+            announcement.User = await _userRepository.SelectByIdAsync(dto.UserId);
+            announcement.Category = await _categoryRepository.SelectByIdAsync(dto.CategoryId);
             var result = await _repository.InsertAsync(announcement);
 
             return result;
