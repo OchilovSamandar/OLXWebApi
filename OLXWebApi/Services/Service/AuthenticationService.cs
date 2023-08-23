@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using OLXWebApi.Data.IRepositories;
 using OLXWebApi.Domain.Entities;
+using OLXWebApi.Domain.Enums;
 using OLXWebApi.Services.Dtos;
 using OLXWebApi.Services.Exceptions;
 using OLXWebApi.Services.IService;
@@ -16,6 +17,12 @@ namespace OLXWebApi.Services.Service
     {
         private readonly IRepository<User> _repository;
         private readonly IConfiguration _configuration;
+        private readonly IRepository<Role> _repositoryRole;
+
+        public AuthenticationService(IRepository<User> repository, IConfiguration configuration, IRepository<Role> repositoryRole) : this(repository, configuration)
+        {
+            _repositoryRole = repositoryRole;
+        }
 
         public AuthenticationService(IRepository<User> repository, IConfiguration configuration)
         {
@@ -29,7 +36,7 @@ namespace OLXWebApi.Services.Service
                 .FirstOrDefaultAsync(user => user.Email == dto.Email);
             if (user == null || !PasswordHelper.Verify(dto.Password, user.Password))
                 throw new OlxException(400, "Email or password is incorrect");
-
+            user.Roles =await _repositoryRole.SelectByIdAsync(user.RoleId);
             return new LoginResultDto
             {
                 Token = GenerateToken(user)
@@ -42,12 +49,14 @@ namespace OLXWebApi.Services.Service
            var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:Key"]);
             //string v = u ;
             //Console.WriteLine(v);
+           // string? value = user.Role.ToString();
             var tokenDescriptor = new SecurityTokenDescriptor
-           {
+            {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                    new Claim("Id",user.Id.ToString()),
-                   new Claim(ClaimTypes.Role,user.Role.Name),
+                   new Claim("Email",user.Email),
+                   new Claim(ClaimTypes.Role,user.Roles.Name),
         }),
                 Audience = _configuration["JWT:Audience"],
                 Issuer = _configuration["JWT:Issuer"],

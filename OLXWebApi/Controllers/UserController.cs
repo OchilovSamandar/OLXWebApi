@@ -82,14 +82,16 @@ namespace OLXWebApi.Controllers
         {
             try
             {
-                return Ok( await _userService.CreateAsync(dto));
-            }catch(EmailAlreadyTakenException e)
+                return Ok(await _userService.CreateAsync(dto));
+            }
+            catch (EmailAlreadyTakenException e)
             {
                 return Conflict(e.Message);
-            }catch(Exception e)
-            {
-                return BadRequest(e.Message);
             }
+            //}catch(Exception e)
+            //{
+            //    return BadRequest(e.Message);
+            //}
         }
 
         [HttpPut("/role")]

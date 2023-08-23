@@ -17,7 +17,7 @@ namespace OLXWebApi.Controllers
             this.authService = authService;
         }
         [HttpPost]
-        public async ValueTask<IActionResult> LoginAsync([FromBody] LoginDto dto)
+        public async ValueTask<IActionResult> LoginAsync( LoginDto dto)
         {
             //token generate bo'lmayapti xato bor
             try
@@ -26,10 +26,11 @@ namespace OLXWebApi.Controllers
             }catch(EmailOrPasswordIncorrectException e)
             {
                 return BadRequest(e.Message);
-            }catch(Exception ex)
-            {
-                return Conflict(ex.Message);
             }
+            //catch(Exception ex)
+            //{
+            //    return Conflict(ex.Message);
+            //}
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OLXWebApi.Domain.Entities;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace OLXWebApi.Services.Dtos
 {
@@ -16,6 +18,7 @@ namespace OLXWebApi.Services.Dtos
         public string Email { get; set; }
         [Required(ErrorMessage = "Password is requaired not empty")]
         public string Password { get; set; }
+        
 
     }
 }
