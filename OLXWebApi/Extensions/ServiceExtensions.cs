@@ -64,7 +64,7 @@ namespace OLXWebApi.Extensions
                     ValidIssuer = configuration["Jwt:Issuer"],
                     ValidAudience = configuration["Jwt:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
-                    ClockSkew = TimeSpan.Zero
+                    ClockSkew = TimeSpan.FromDays(1),
                 };
             });
         }
