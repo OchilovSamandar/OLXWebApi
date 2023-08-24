@@ -12,8 +12,8 @@ using OLXWebApi.Data.DbContexts;
 namespace OLXWebApi.Migrations
 {
     [DbContext(typeof(OlxDbContext))]
-    [Migration("20230822124533_h")]
-    partial class h
+    [Migration("20230824133642_a")]
+    partial class a
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -155,13 +155,13 @@ namespace OLXWebApi.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(2023, 8, 22, 12, 45, 33, 691, DateTimeKind.Utc).AddTicks(4277),
+                            CreatedAt = new DateTime(2023, 8, 24, 13, 36, 42, 657, DateTimeKind.Utc).AddTicks(6829),
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2L,
-                            CreatedAt = new DateTime(2023, 8, 22, 12, 45, 33, 691, DateTimeKind.Utc).AddTicks(4279),
+                            CreatedAt = new DateTime(2023, 8, 24, 13, 36, 42, 657, DateTimeKind.Utc).AddTicks(6833),
                             Name = "User"
                         });
                 });
@@ -242,13 +242,13 @@ namespace OLXWebApi.Migrations
 
             modelBuilder.Entity("OLXWebApi.Domain.Entities.User", b =>
                 {
-                    b.HasOne("OLXWebApi.Domain.Entities.Role", "Role")
+                    b.HasOne("OLXWebApi.Domain.Entities.Role", "Roles")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Role");
+                    b.Navigation("Roles");
                 });
 
             modelBuilder.Entity("OLXWebApi.Domain.Entities.Role", b =>

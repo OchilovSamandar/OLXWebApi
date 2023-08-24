@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OLXWebApi.Migrations
 {
-    public partial class h : Migration
+    public partial class a : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -126,12 +126,12 @@ namespace OLXWebApi.Migrations
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "CreatedAt", "Name", "UpdatedAt" },
-                values: new object[] { 1L, new DateTime(2023, 8, 22, 12, 45, 33, 691, DateTimeKind.Utc).AddTicks(4277), "Admin", null });
+                values: new object[] { 1L, new DateTime(2023, 8, 24, 13, 36, 42, 657, DateTimeKind.Utc).AddTicks(6829), "Admin", null });
 
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "CreatedAt", "Name", "UpdatedAt" },
-                values: new object[] { 2L, new DateTime(2023, 8, 22, 12, 45, 33, 691, DateTimeKind.Utc).AddTicks(4279), "User", null });
+                values: new object[] { 2L, new DateTime(2023, 8, 24, 13, 36, 42, 657, DateTimeKind.Utc).AddTicks(6833), "User", null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Announcements_CategoryId",
