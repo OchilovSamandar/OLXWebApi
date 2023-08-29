@@ -22,6 +22,11 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddCustomService();
 builder.Services.ConfigureSwagger();
 builder.Services.AddJwtService(builder.Configuration);
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", p => p.RequireRole("Admin"));
+    options.AddPolicy("User", p => p.RequireRole("User"));
+});
 
 var app = builder.Build();
 
