@@ -9,6 +9,7 @@ using OLXWebApi.Domain.Entities;
 using OLXWebApi.Domain.Enums;
 using OLXWebApi.Models;
 using OLXWebApi.Services.Dtos;
+using OLXWebApi.Services.Exceptions;
 using OLXWebApi.Services.Exceptions.UserExceptions;
 using OLXWebApi.Services.IService;
 using OLXWebApi.Shared.Helper;
@@ -106,7 +107,7 @@ namespace OLXWebApi.Services.Service
         {
             User user = await _repository.SelectByIdAsync(id);
             if (user == null)
-                throw new NotFoundUserException(id);
+                throw new OlxWebApiException(404,"User not found");
                 
             return  this._mapper.Map<UserForResultDto>(user);
         }

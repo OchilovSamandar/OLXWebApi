@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OLXWebApi.Domain.Entities;
 using OLXWebApi.Domain.Enums;
+using OLXWebApi.Models;
 using OLXWebApi.Services.Dtos;
+using OLXWebApi.Services.Exceptions;
 using OLXWebApi.Services.Exceptions.UserExceptions;
 using OLXWebApi.Services.IService;
 
@@ -11,7 +13,7 @@ namespace OLXWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+   // [Authorize(Roles = "Admin")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -30,15 +32,29 @@ namespace OLXWebApi.Controllers
         [HttpGet("{id}")]
         public async ValueTask<IActionResult> GetUserById(long id)
         {
+            //try
+            //{
+            //    return Ok(await _userService.RetriveById(id));
+            //}catch (NotFoundUserException e)
+            //{
+            //    return NotFound(e.Message);
+            //}catch(Exception ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
             try
             {
-                return Ok(await _userService.RetriveById(id));
-            }catch (NotFoundUserException e)
+
+                return Ok(new Response
+                {
+                    Status = 200,
+                    Message = "OK",
+                    Data = await _userService.RetriveById(id)
+
+                });
+            }catch(OlxWebApiException e)
             {
-                return NotFound(e.Message);
-            }catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
+                return BadRequest(e.Message);
             }
         }
 

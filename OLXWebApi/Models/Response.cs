@@ -6,10 +6,6 @@
         public string Message { get; set; }
         public object Data { get; set; }
 
-        public Response(int status, string message)
-        {
-            Status = status;
-            Message = message;
-        }
+        
     }
 }
