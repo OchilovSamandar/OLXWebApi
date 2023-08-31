@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using OLXWebApi.Domain.Entities.Commans;
 using OLXWebApi.Domain.Enums;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OLXWebApi.Domain.Entities

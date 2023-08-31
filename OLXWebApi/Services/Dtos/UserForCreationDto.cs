@@ -17,6 +17,7 @@ namespace OLXWebApi.Services.Dtos
         [Required(ErrorMessage = "Email is requaired not empty")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Password is requaired not empty")]
+        
         public string Password { get; set; }
         
 
