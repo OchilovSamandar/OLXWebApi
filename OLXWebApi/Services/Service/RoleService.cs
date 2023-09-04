@@ -41,9 +41,16 @@ namespace OLXWebApi.Services.Service
             return _mapper.Map<RoleForResultDto>(mappedDto);         
         }
 
-        public ValueTask<bool> DeleteRoleAsync(long id)
+        public async ValueTask<bool> DeleteRoleAsync(long id)
         {
-            throw new NotImplementedException();
+            var role = await _repository.SelectByIdAsync(id);
+            if (role == null)
+                throw new OlxWebApiException(404, "Role not found");
+
+            await _repository.DeleteAsync(id);
+            await _repository.SaveChangesAsync();
+
+            return true;
         }
 
         public ValueTask<IEnumerable<RoleForResultDto>> RetriveAllRoleAsync()
@@ -51,9 +58,13 @@ namespace OLXWebApi.Services.Service
             throw new NotImplementedException();
         }
 
-        public ValueTask<Role> RetriveRoleByIdAsync(long id)
+        public async ValueTask<Role> RetriveRoleByIdAsync(long id)
         {
-            throw new NotImplementedException();
+           var exsistRole = await _repository.SelectByIdAsync(id);
+            if (exsistRole == null)
+                throw new OlxWebApiException(404, "Role is not found");
+
+            return _mapper.Map<Role>(exsistRole);
         }
 
         public ValueTask<RoleForResultDto> UpdateRoleAsync(RoleForUpdateDto dto, long id)

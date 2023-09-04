@@ -27,5 +27,29 @@ namespace OLXWebApi.Controllers
                 Data = await roleService.CreateRoleAsync(dto)
             });
         }
+
+        [HttpDelete]
+        public async ValueTask<IActionResult> RemoveRoleAsync(long id)
+        {
+            return Ok(new Response
+            {
+                Status = 200,
+                Message = "OK",
+                Data = await roleService.DeleteRoleAsync(id)
+            });
+        }
+
+        [HttpGet]
+        public async ValueTask<IActionResult> GetRoleByIdAsync(long id)
+        {
+            return Ok(new Response
+            {
+                Status = 200,
+                Message = "OK",
+                Data = await roleService.RetriveRoleByIdAsync(id)
+            });
+        }
+
+        
     }
 }
