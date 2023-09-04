@@ -3,6 +3,7 @@ using OLXWebApi.Data.DbContexts;
 using OLXWebApi.Data.IRepositories;
 using OLXWebApi.Data.Repositories;
 using OLXWebApi.Extensions;
+using OLXWebApi.Middlewares;
 using OLXWebApi.Services.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +38,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

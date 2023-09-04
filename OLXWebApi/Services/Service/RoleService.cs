@@ -33,7 +33,7 @@ namespace OLXWebApi.Services.Service
         {
            var role =  await _repository.SelectAll().FirstOrDefaultAsync(r => r.Name.Equals(dto.Name));
             if (role != null)
-                throw new OlxWebApiException(404, "Role already exsist");
+                throw new OlxWebApiException(409, "Role already exsist");
             var mappedDto = _mapper.Map<Role>(dto);
             await _repository.InsertAsync(mappedDto);
             await _repository.SaveChangesAsync();
@@ -53,9 +53,11 @@ namespace OLXWebApi.Services.Service
             return true;
         }
 
-        public ValueTask<IEnumerable<RoleForResultDto>> RetriveAllRoleAsync()
+        public async ValueTask<IEnumerable<RoleForResultDto>> RetriveAllRoleAsync()
         {
-            throw new NotImplementedException();
+            var roles = await _repository.SelectAll().ToListAsync();
+
+            return _mapper.Map<IEnumerable<RoleForResultDto>>(roles);
         }
 
         public async ValueTask<Role> RetriveRoleByIdAsync(long id)
