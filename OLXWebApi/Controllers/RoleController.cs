@@ -39,7 +39,7 @@ namespace OLXWebApi.Controllers
             });
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async ValueTask<IActionResult> GetRoleByIdAsync(long id)
         {
             return Ok(new Response
@@ -60,6 +60,18 @@ namespace OLXWebApi.Controllers
                 Data = await roleService.UpdateRoleAsync(dto ,id)
             });
         }
+
+        [HttpGet]
+        public async ValueTask<IActionResult> GetAllRoles()
+        {
+            return Ok(new Response
+            {
+                Status = 200,
+                Message = "OK",
+                Data = await roleService.RetriveAllRoleAsync()
+            });
+        }
+
 
         
     }
