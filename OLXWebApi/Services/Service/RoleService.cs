@@ -67,9 +67,18 @@ namespace OLXWebApi.Services.Service
             return _mapper.Map<Role>(exsistRole);
         }
 
-        public ValueTask<RoleForResultDto> UpdateRoleAsync(RoleForUpdateDto dto, long id)
+        public async ValueTask<RoleForResultDto> UpdateRoleAsync(RoleForUpdateDto dto, long id)
         {
-            throw new NotImplementedException();
+           var exsistRole = await _repository.SelectByIdAsync(id);
+            if (exsistRole == null)
+                throw new OlxWebApiException(404, "Role is not found");
+
+            var mappedDto = _mapper.Map(dto, exsistRole);
+            mappedDto.UpdatedAt = DateTime.UtcNow;
+            await _repository.SaveChangesAsync();
+            var result = _mapper.Map<RoleForResultDto>(mappedDto);
+
+            return result;
         }
     }
 }
