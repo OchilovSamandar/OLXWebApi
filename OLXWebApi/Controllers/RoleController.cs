@@ -50,6 +50,17 @@ namespace OLXWebApi.Controllers
             });
         }
 
+        [HttpPut]
+        public async ValueTask<IActionResult> UpdateRole(RoleForUpdateDto dto, long id)
+        {
+            return Ok(new Response
+            {
+                Status = 200,
+                Message = "OK",
+                Data = await roleService.UpdateRoleAsync(dto ,id)
+            });
+        }
+
         
     }
 }
