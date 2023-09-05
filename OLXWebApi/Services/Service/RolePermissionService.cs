@@ -24,6 +24,17 @@ namespace OLXWebApi.Services.Service
             this.permissionRepository = permissionRepository;
         }
 
+        public async ValueTask<bool> CheckPermission(string role, string accsesesMethod)
+        {
+            var permissions = await repository.SelectAll().Where(p => p.Role.Name == role).ToListAsync();
+            foreach (var permission in permissions)
+            {
+                if(permission.Permission.Name == accsesesMethod)
+                    return true;
+            }
+            return false;
+        }
+
         public async ValueTask<RolePermissionResultDto> CreateAsync(RolePermissionCreationDto dto)
         {
             var role = await roleRepository.SelectByIdAsync(dto.RoleId);
