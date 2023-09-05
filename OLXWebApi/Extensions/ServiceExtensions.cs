@@ -17,6 +17,7 @@ namespace OLXWebApi.Extensions
             services.AddScoped<IAnnouncementService, AnnouncementService>();
             services.AddScoped<IMyAdsService, MyAdsService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IPermissionService, PermissionService>();
 
         }
         public static void ConfigureSwagger(this IServiceCollection services)
