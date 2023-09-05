@@ -26,6 +26,9 @@ namespace OLXWebApi.Services.Mappers
             //permision
             CreateMap<Permission,PermissionCreationDto>().ReverseMap();
             CreateMap<PermissionResultDto,Permission>().ReverseMap();
+            //rolepermission
+            CreateMap<RolePermission,PermissionCreationDto>().ReverseMap();
+            CreateMap<RoleForResultDto,RolePermission>().ReverseMap();
         }
     }
 }
