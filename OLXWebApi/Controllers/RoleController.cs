@@ -72,6 +72,17 @@ namespace OLXWebApi.Controllers
             });
         }
 
+        [HttpPut("assign-role")]
+        public async ValueTask<IActionResult> AssignRoleForUser(long userId,long roleId)
+        {
+            return Ok(new Response
+            {
+                Status = 200,
+                Message = "OK",
+                Data = await roleService.AssignRoleForUserAsync(userId, roleId)
+            });
+        }
+
 
         
     }

@@ -12,16 +12,28 @@ namespace OLXWebApi.Services.Service
     {
         private readonly IMapper _mapper;
         private readonly IRepository<Role> _repository;
+        private readonly IRepository<User> _userRepository;
 
-        public RoleService(IMapper mapper, IRepository<Role> repository)
+        public RoleService(IMapper mapper, IRepository<Role> repository,IRepository<User> userRepository)
         {
             _mapper = mapper;
             _repository = repository;
+            _userRepository = userRepository;
         }
 
-        public ValueTask<bool> AssignRoleForUserAsync(long userId, long roleId)
+        public async ValueTask<bool> AssignRoleForUserAsync(long userId, long roleId)
         {
-            throw new NotImplementedException();
+            var exsistUser =  await _userRepository.SelectByIdAsync(userId);
+            var exsistRole = await _repository.SelectByIdAsync(roleId);
+            if (exsistUser == null || exsistRole == null)
+            {
+                throw new OlxWebApiException(404, "User or Role is not found");
+            }
+
+            exsistUser.RoleId = roleId;
+            await _userRepository.SaveChangesAsync();
+
+            return true;
         }
 
         public ValueTask<bool> CheckRole(string roleName)
