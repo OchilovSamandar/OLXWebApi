@@ -27,5 +27,49 @@ namespace OLXWebApi.Controllers
                 Data = await rolePermissionService.CreateAsync(dto)
             });
         }
+
+        [HttpGet("{id}")]
+        public async ValueTask<IActionResult> GetByIdAsync(long id)
+        {
+            return Ok(new Response
+            {
+                Status = 200,
+                Message = "OK",
+                Data = await rolePermissionService.RetrieveByIdAsync(id)
+            });
+        }
+
+        [HttpGet]
+        public async ValueTask<IActionResult> GetAllAsync()
+        {
+            return Ok(new Response 
+            { 
+                Status = 200,
+                Message = "OK" ,
+                Data = await rolePermissionService.RetrieveAllAsync()
+            });
+        }
+
+        [HttpDelete]
+        public async ValueTask<IActionResult> DeleteAsync(long id)
+        {
+            return Ok(new Response
+            {
+                Status = 200,
+                Message = "OK",
+                Data = await rolePermissionService.DeleteAsync(id)
+            });
+        }
+
+        [HttpPut]
+        public async ValueTask<IActionResult> EditAsync(RolePermissionCreationDto dto, long id)
+        {
+            return Ok(new Response
+            {
+                Status = 200,
+                Message = "OK",
+                Data = await rolePermissionService.ModifyAsync(dto, id)
+            });
+        }
     }
 }

@@ -35,12 +35,12 @@ namespace OLXWebApi.Services.Service
             if (rolePermission != null)
                 throw new OlxWebApiException(409, "RolePermission is already available");
 
-            //var mappedRolePermission =this.mapper.Map<RolePermission>(dto);
-            var rolePermission1 = new RolePermission();
-            rolePermission1.RoleId = dto.RoleId;
-            rolePermission1.PermissionId = dto.PermissionId;
-            rolePermission1.CreatedAt = DateTime.UtcNow;
-            var result = await repository.InsertAsync(rolePermission1);
+            var mappedRolePermission =this.mapper.Map<RolePermission>(dto);
+            //var rolePermission1 = new RolePermission();
+            //rolePermission1.RoleId = dto.RoleId;
+            //rolePermission1.PermissionId = dto.PermissionId;
+            mappedRolePermission.CreatedAt = DateTime.UtcNow;
+            var result = await repository.InsertAsync(mappedRolePermission);
 
             return mapper.Map<RolePermissionResultDto>(result);
         }
