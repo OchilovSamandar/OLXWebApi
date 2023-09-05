@@ -7,6 +7,7 @@ namespace OLXWebApi.Services.IService
         ValueTask<RolePermissionResultDto> CreateAsync(RolePermissionCreationDto dto);
         ValueTask<RolePermissionResultDto> ModifyAsync(RolePermissionCreationDto dto,long id);
         ValueTask<bool> DeleteAsync(long id);
+        ValueTask<bool> CheckPermission(string role, string accsesesMethod);
         ValueTask<RolePermissionResultDto> RetrieveByIdAsync(long id);
         ValueTask<IEnumerable<RolePermissionResultDto>> RetrieveAllAsync();
 
