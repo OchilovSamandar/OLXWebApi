@@ -12,23 +12,35 @@ namespace OLXWebApi.Services.Service
     {
         private readonly IRepository<RolePermission> repository;
         private readonly IMapper mapper;
+        private readonly IRepository<Role> roleRepository;
+        private readonly IRepository<Permission> permissionRepository;
 
-        public RolePermissionService(IRepository<RolePermission> repository, IMapper mapper)
+        public RolePermissionService(IRepository<RolePermission> repository, IMapper mapper,
+            IRepository<Role> roleRepository, IRepository<Permission> permissionRepository)
         {
             this.repository = repository;
             this.mapper = mapper;
+            this.roleRepository = roleRepository;
+            this.permissionRepository = permissionRepository;
         }
 
         public async ValueTask<RolePermissionResultDto> CreateAsync(RolePermissionCreationDto dto)
         {
-            var rolePermission = await repository.SelectAll()
-                .FirstOrDefaultAsync(rp => rp.RoleId == dto.RoleId && rp.PermissionId==dto.PermissionId);
+            var role = await roleRepository.SelectByIdAsync(dto.RoleId);
+            var permission = await permissionRepository.SelectByIdAsync(dto.PermissionId);
+            if (role == null || permission == null)
+                throw new OlxWebApiException(404, "Role or permission is not found");
+
+             var rolePermission = await repository.SelectAll().FirstOrDefaultAsync(rp => rp.RoleId == dto.RoleId && rp.PermissionId==dto.PermissionId);
             if (rolePermission != null)
                 throw new OlxWebApiException(409, "RolePermission is already available");
 
-            var mappedRolePermission = mapper.Map<RolePermission>(rolePermission);
-            mappedRolePermission.CreatedAt = DateTime.UtcNow;
-            var result = await repository.InsertAsync(mappedRolePermission);
+            //var mappedRolePermission =this.mapper.Map<RolePermission>(dto);
+            var rolePermission1 = new RolePermission();
+            rolePermission1.RoleId = dto.RoleId;
+            rolePermission1.PermissionId = dto.PermissionId;
+            rolePermission1.CreatedAt = DateTime.UtcNow;
+            var result = await repository.InsertAsync(rolePermission1);
 
             return mapper.Map<RolePermissionResultDto>(result);
         }
@@ -72,6 +84,5 @@ namespace OLXWebApi.Services.Service
 
             return result;
         }
-
     }
 }
