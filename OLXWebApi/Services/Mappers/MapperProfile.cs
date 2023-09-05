@@ -4,6 +4,7 @@ using OLXWebApi.Domain.Entities;
 using OLXWebApi.Services.Dtos;
 using OLXWebApi.Services.Dtos.Permission;
 using OLXWebApi.Services.Dtos.Role;
+using OLXWebApi.Services.Dtos.RolePermission;
 
 namespace OLXWebApi.Services.Mappers
 {
@@ -27,8 +28,8 @@ namespace OLXWebApi.Services.Mappers
             CreateMap<Permission,PermissionCreationDto>().ReverseMap();
             CreateMap<PermissionResultDto,Permission>().ReverseMap();
             //rolepermission
-            CreateMap<RolePermission,PermissionCreationDto>().ReverseMap();
-            CreateMap<RoleForResultDto,RolePermission>().ReverseMap();
+            CreateMap<RolePermission,RolePermissionCreationDto>().ReverseMap();
+            CreateMap<RolePermissionResultDto,RolePermission>().ReverseMap();
         }
     }
 }
