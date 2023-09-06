@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OLXWebApi.Attributes;
 using OLXWebApi.Domain.Entities;
 using OLXWebApi.Domain.Enums;
 using OLXWebApi.Models;
@@ -24,6 +25,7 @@ namespace OLXWebApi.Controllers
         }
 
         [HttpGet]
+        [CustomAuthorize]
         public async ValueTask<IActionResult> GetAllUsers()
         {
             return Ok(await _userService.RetriveAllAsync());
