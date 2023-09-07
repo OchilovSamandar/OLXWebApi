@@ -92,6 +92,9 @@ namespace OLXWebApi.Extensions
         //        .AddRoles.CreateAsync(new Role(admin));
         //}
 
-
+        public static void IdentityRole(this ServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
+        }
     }
 }
