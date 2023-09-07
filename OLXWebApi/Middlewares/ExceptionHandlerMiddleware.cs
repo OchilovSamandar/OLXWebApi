@@ -22,6 +22,7 @@ namespace OLXWebApi.Middlewares
             }
             catch(OlxWebApiException exception)
             {
+                Console.WriteLine(exception.Message);
                 httpContext.Response.StatusCode = exception.Status;
                 await httpContext.Response.WriteAsJsonAsync(new Response
                 {
@@ -31,6 +32,7 @@ namespace OLXWebApi.Middlewares
             }
             catch (Exception exception)
             {
+                Console.WriteLine($"Exception: {exception.Message}");
                 _logger.LogError($"{exception}\n\n");
                 httpContext.Response.StatusCode = 500;
                 await httpContext.Response.WriteAsJsonAsync(new Response

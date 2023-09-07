@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OLXWebApi.Data.DbContexts;
 using OLXWebApi.Data.IRepositories;
@@ -28,6 +29,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Admin", p => p.RequireRole("Admin"));
     options.AddPolicy("User", p => p.RequireRole("User"));
 });
+
 
 var app = builder.Build();
 

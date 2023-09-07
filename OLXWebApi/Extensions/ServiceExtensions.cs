@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using OLXWebApi.Domain.Entities;
 using OLXWebApi.Services.IService;
 using OLXWebApi.Services.Service;
 using System.Text;
@@ -82,6 +84,13 @@ namespace OLXWebApi.Extensions
                 });
             });
         }
+
+        //public static void IdentityRole(this IServiceCollection services)
+        //{
+        //    string admin = "Admin";
+        //    services.AddIdentity<User, Role>()
+        //        .AddRoles.CreateAsync(new Role(admin));
+        //}
 
 
     }
