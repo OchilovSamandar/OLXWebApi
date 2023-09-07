@@ -5,7 +5,7 @@ namespace OLXWebApi.Services.Commons.Attributes
 {
     public class StrongPassword : ValidationAttribute
     {
-        public override ValidationResult IsValid(object? value, ValidationContext validationContext)
+        protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
         {
             if (value == null)
             {
@@ -23,10 +23,7 @@ namespace OLXWebApi.Services.Commons.Attributes
                     return new ValidationResult("Passwor must be less than 30 characters");
                 }
                 var result = PasswordValidator.IsStrong(password);
-                if(result.isValid == false)
-                {
-                    return new ValidationResult(result.Message);
-                }
+                if(result.isValid == false) return  new ValidationResult(result.Message);
                 return  ValidationResult.Success;
             }
         }
