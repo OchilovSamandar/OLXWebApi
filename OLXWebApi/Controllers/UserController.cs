@@ -25,7 +25,6 @@ namespace OLXWebApi.Controllers
         }
 
         [HttpGet]
-        [CustomAuthorize]
         public async ValueTask<IActionResult> GetAllUsers()
         {
             return Ok(await _userService.RetriveAllAsync());
