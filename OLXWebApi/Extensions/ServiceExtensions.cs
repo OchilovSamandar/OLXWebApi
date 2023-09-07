@@ -84,17 +84,5 @@ namespace OLXWebApi.Extensions
                 });
             });
         }
-
-        //public static void IdentityRole(this IServiceCollection services)
-        //{
-        //    string admin = "Admin";
-        //    services.AddIdentity<User, Role>()
-        //        .AddRoles.CreateAsync(new Role(admin));
-        //}
-
-        public static void IdentityRole(this ServiceProvider serviceProvider)
-        {
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
-        }
     }
 }
