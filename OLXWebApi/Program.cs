@@ -23,6 +23,7 @@ builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddCustomService();
 builder.Services.ConfigureSwagger();
+builder.Services.ConfigureCors();
 builder.Services.AddJwtService(builder.Configuration);
 builder.Services.AddAuthorization(options =>
 {
